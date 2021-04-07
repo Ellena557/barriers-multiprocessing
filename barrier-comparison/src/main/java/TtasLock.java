@@ -22,7 +22,7 @@ public class TtasLock implements Lock {
     }
 
     public void lockInterruptibly() throws InterruptedException {
-        state.set(false);
+
     }
 
     public boolean tryLock() {
@@ -34,7 +34,7 @@ public class TtasLock implements Lock {
     }
 
     public void unlock() {
-
+        state.set(false);
     }
 
     public Condition newCondition() {

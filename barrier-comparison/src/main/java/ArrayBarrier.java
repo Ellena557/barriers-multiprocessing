@@ -19,15 +19,31 @@ public class ArrayBarrier implements MyBarrier {
         if (myIndex == threadNumber - 1) {
             while (locks[myIndex - 1] != 1) {
                 // wait
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             locks[myIndex] = 2;
+            synchronized (this) {
+                this.notifyAll();
+            }
         }
 
         // first thread
         if (myIndex == 0) {
             locks[myIndex] = 1;
             while (locks[myIndex + 1] != 2) {
-                // wait
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -35,15 +51,36 @@ public class ArrayBarrier implements MyBarrier {
         if (myIndex > 0 && myIndex < threadNumber - 1) {
             while (locks[myIndex - 1] != 1) {
                 // wait
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            
+
             locks[myIndex] = 1;
+
+            synchronized (this) {
+                this.notifyAll();
+            }
 
             while (locks[myIndex + 1] != 2) {
                 // wait
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             locks[myIndex] = 2;
+            synchronized (this) {
+                this.notifyAll();
+            }
         }
     }
 }

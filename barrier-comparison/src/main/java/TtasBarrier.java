@@ -1,12 +1,15 @@
 public class TtasBarrier implements MyBarrier {
     private int threadNumber;
-    private volatile int counter;
+    private int counter;
     private TtasLock ttasLock;
+    private final Object waitObj;
+
 
     public TtasBarrier(int threadNumber) {
         this.threadNumber = threadNumber;
         this.counter = 0;
         this.ttasLock = new TtasLock();
+        this.waitObj = new Object();
     }
 
     public void doSpin() {
@@ -17,8 +20,19 @@ public class TtasBarrier implements MyBarrier {
             ttasLock.unlock();
         }
 
-        while(counter < threadNumber) {
-            // wait
+        // waiting
+        synchronized (waitObj) {
+
+            if (counter < threadNumber) {
+                try {
+                    waitObj.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                waitObj.notifyAll();
+            }
         }
     }
 }
