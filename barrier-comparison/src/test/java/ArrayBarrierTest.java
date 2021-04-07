@@ -2,7 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ArrayBarrierTest {
-    private int numThreads = 10000;
+    private int numThreads = 120;
     private long startTime;
     private long endTime;
 
@@ -27,11 +27,9 @@ public class ArrayBarrierTest {
     }
 
     public void foo() {
-        //System.out.println("foo");
     }
 
     public void bar() {
-        //System.out.println("bar");
         endTime = System.nanoTime();
     }
 }

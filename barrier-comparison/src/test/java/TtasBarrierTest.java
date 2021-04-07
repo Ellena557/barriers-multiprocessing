@@ -2,7 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TtasBarrierTest {
-    private int numThreads = 10000;
+    private int numThreads = 120;
     private long startTime;
     private long endTime;
 
