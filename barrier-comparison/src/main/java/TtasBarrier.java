@@ -22,17 +22,14 @@ public class TtasBarrier implements MyBarrier {
 
         // waiting
         synchronized (waitObj) {
-
-            if (counter < threadNumber) {
+            while (counter < threadNumber) {
                 try {
                     waitObj.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-            } else {
-                waitObj.notifyAll();
             }
+            waitObj.notifyAll();
         }
     }
 }
